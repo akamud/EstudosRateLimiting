@@ -14,7 +14,7 @@ var sincronizadorVendas = new SincronizadorVendas(concurrencyRateLimiter);
 
 var tasks = new List<Task>();
 
-for (var i = 0; i < 3; i++)
+for (var i = 0; i < 10; i++)
 {
     tasks.Add(sincronizadorClientes.Sincronizar());
     tasks.Add(sincronizadorProdutos.Sincronizar());

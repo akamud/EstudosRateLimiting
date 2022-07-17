@@ -13,6 +13,6 @@ public class SincronizadorVendas : Sincronizador
         Console.WriteLine($"{DateTime.Now.ToString()}: Rodando sincronizador de vendas");
 
         // Simulando delay na rede
-        await Task.Delay(3_000);
+        await Task.Delay(1_500);
     }
 }

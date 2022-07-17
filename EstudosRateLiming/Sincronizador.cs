@@ -4,16 +4,25 @@ namespace EstudosRateLiming;
 
 public abstract class Sincronizador
 {
-    protected readonly RateLimiter RateLimiter;
+    private readonly PartitionedRateLimiter<string> _rateLimiter;
+    private readonly ConcurrencyLimiter _concurrencyRateLimiter;
 
-    protected Sincronizador(RateLimiter rateLimiter) => RateLimiter = rateLimiter;
+    protected Sincronizador(PartitionedRateLimiter<string> rateLimiter, ConcurrencyLimiter concurrencyRateLimiter)
+    {
+        _rateLimiter = rateLimiter;
+        _concurrencyRateLimiter = concurrencyRateLimiter;
+    }
+
+    protected abstract string Recurso { get; }
 
     public virtual async Task Sincronizar()
     {
-        using var lease = await RateLimiter.WaitAsync();
+        using var lease = await _rateLimiter.WaitAsync(Recurso);
         if (lease.IsAcquired)
         {
-            await SincronizarDados();
+            using var globalLease = await _concurrencyRateLimiter.WaitAsync();
+            if (globalLease.IsAcquired)
+                await SincronizarDados();
         }
     }
 

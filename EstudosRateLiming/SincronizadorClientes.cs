@@ -4,9 +4,11 @@ namespace EstudosRateLiming;
 
 public class SincronizadorClientes : Sincronizador
 {
-    public SincronizadorClientes(RateLimiter rateLimiter) : base(rateLimiter)
+    public SincronizadorClientes(PartitionedRateLimiter<string> rateLimiter, ConcurrencyLimiter concurrencyRateLimiter) : base(rateLimiter, concurrencyRateLimiter)
     {
     }
+
+    protected override string Recurso => "Clientes";
 
     protected override async Task SincronizarDados()
     {

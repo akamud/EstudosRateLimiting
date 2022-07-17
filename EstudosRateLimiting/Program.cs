@@ -3,12 +3,9 @@ using System.Threading.RateLimiting;
 
 Console.WriteLine("Sincronizador");
 
-var concurrencyLimiter =
-    new ConcurrencyLimiter(new ConcurrencyLimiterOptions(1, QueueProcessingOrder.OldestFirst, int.MaxValue));
-
-var sincronizadorClientes = new SincronizadorClientes(concurrencyLimiter);
-var sincronizadorProdutos = new SincronizadorProdutos(concurrencyLimiter);
-var sincronizadorVendas = new SincronizadorVendas(concurrencyLimiter);
+var sincronizadorClientes = new SincronizadorClientes();
+var sincronizadorProdutos = new SincronizadorProdutos();
+var sincronizadorVendas = new SincronizadorVendas();
 
 var tasks = new List<Task>();
 

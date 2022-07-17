@@ -4,10 +4,6 @@ namespace EstudosRateLimiting;
 
 public class SincronizadorProdutos : Sincronizador
 {
-    public SincronizadorProdutos(ConcurrencyLimiter rateLimiter) : base(rateLimiter)
-    {
-    }
-
     protected override string Recurso => "Produtos";
 
     protected override async Task SincronizarDados()

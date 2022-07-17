@@ -4,7 +4,7 @@ namespace EstudosRateLimiting;
 
 public class SincronizadorVendas : Sincronizador
 {
-    public SincronizadorVendas(PartitionedRateLimiter<string> rateLimiter, ConcurrencyLimiter concurrencyRateLimiter) : base(rateLimiter, concurrencyRateLimiter)
+    public SincronizadorVendas(ConcurrencyLimiter rateLimiter) : base(rateLimiter)
     {
     }
 

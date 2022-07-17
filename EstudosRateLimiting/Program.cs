@@ -3,18 +3,12 @@ using System.Threading.RateLimiting;
 
 Console.WriteLine("Sincronizador");
 
-var concurrencyRateLimiter =
+var concurrencyLimiter =
     new ConcurrencyLimiter(new ConcurrencyLimiterOptions(1, QueueProcessingOrder.OldestFirst, int.MaxValue));
 
-var partitionedRateLimiter = PartitionedRateLimiter.Create<string, string>(resource =>
-{
-    return RateLimitPartition.Create(resource,
-        _ => new ConcurrencyLimiter(new ConcurrencyLimiterOptions(1, QueueProcessingOrder.OldestFirst, 0)));
-});
-
-var sincronizadorClientes = new SincronizadorClientes(partitionedRateLimiter, concurrencyRateLimiter);
-var sincronizadorProdutos = new SincronizadorProdutos(partitionedRateLimiter, concurrencyRateLimiter);
-var sincronizadorVendas = new SincronizadorVendas(partitionedRateLimiter, concurrencyRateLimiter);
+var sincronizadorClientes = new SincronizadorClientes(concurrencyLimiter);
+var sincronizadorProdutos = new SincronizadorProdutos(concurrencyLimiter);
+var sincronizadorVendas = new SincronizadorVendas(concurrencyLimiter);
 
 var tasks = new List<Task>();
 

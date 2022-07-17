@@ -1,11 +1,18 @@
+using System.Threading.RateLimiting;
+
 namespace EstudosRateLiming;
 
-public class SincronizadorProdutos
+public class SincronizadorProdutos : Sincronizador
 {
-    public async Task Sincronizar()
+    public SincronizadorProdutos(RateLimiter rateLimiter) : base(rateLimiter)
     {
-        Console.WriteLine("Rodando sincronizador de produtos");
+    }
+
+    protected override async Task SincronizarDados()
+    {
+        Console.WriteLine($"{DateTime.Now.ToString()}: Rodando sincronizador de produtos");
 
         // Simulando delay na rede
         await Task.Delay(3_000);
-    }}
+    }
+}

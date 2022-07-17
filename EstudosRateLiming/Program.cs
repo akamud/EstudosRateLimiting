@@ -1,19 +1,26 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using EstudosRateLiming;
+using System.Threading.RateLimiting;
 
 Console.WriteLine("Sincronizador");
 
-var sincronizadorClientes = new SincronizadorClientes();
-var sincronizadorProdutos = new SincronizadorProdutos();
-var sincronizadorVendas = new SincronizadorVendas();
+var concurrencyRateLimiter =
+    new ConcurrencyLimiter(new ConcurrencyLimiterOptions(2, QueueProcessingOrder.OldestFirst, int.MaxValue));
+
+var sincronizadorClientes = new SincronizadorClientes(concurrencyRateLimiter);
+var sincronizadorProdutos = new SincronizadorProdutos(concurrencyRateLimiter);
+var sincronizadorVendas = new SincronizadorVendas(concurrencyRateLimiter);
+
+var tasks = new List<Task>();
 
 for (var i = 0; i < 3; i++)
 {
-    _ = sincronizadorClientes.Sincronizar();
-    _ = sincronizadorProdutos.Sincronizar();
-    _ = sincronizadorVendas.Sincronizar();
+    tasks.Add(sincronizadorClientes.Sincronizar());
+    tasks.Add(sincronizadorProdutos.Sincronizar());
+    tasks.Add(sincronizadorVendas.Sincronizar());
 }
 
-
+await Task.WhenAll(tasks);
+Console.WriteLine("Sincronizador finalizado");
 Console.ReadLine();

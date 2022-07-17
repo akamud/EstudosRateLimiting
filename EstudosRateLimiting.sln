@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudosRateLiming", "EstudosRateLiming\EstudosRateLiming.csproj", "{EF9C0538-8EB1-4E45-A56B-343372F81942}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstudosRateLimiting", "EstudosRateLimiting\EstudosRateLimiting.csproj", "{EF9C0538-8EB1-4E45-A56B-343372F81942}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

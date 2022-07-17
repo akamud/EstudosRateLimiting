@@ -1,6 +1,6 @@
 using System.Threading.RateLimiting;
 
-namespace EstudosRateLiming;
+namespace EstudosRateLimiting;
 
 public class SincronizadorProdutos : Sincronizador
 {
